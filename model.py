@@ -111,7 +111,7 @@ class Block(nn.Module):
         return x
 
 
-class ResNet(nn.Module):
+class BoTNet(nn.Module):
     def __init__(
             self,
             block: Block,
@@ -121,7 +121,7 @@ class ResNet(nn.Module):
             shape: Tuple,
             heads: int,
     ):
-        super(ResNet, self).__init__()
+        super(BoTNet, self).__init__()
 
         self.channels = 64
         self.shape = shape
@@ -198,8 +198,8 @@ class ResNet(nn.Module):
         return layers
 
 
-def ResNet50(num_classes=1000, resolution=(224, 224), heads=4):
-    return ResNet(Block, [3, 4, 6, 3], in_channels=3, num_classes=num_classes, shape=resolution, heads=heads)
+def BoTNet50(num_classes=1000, input_shape=(224, 224), heads=4):
+    return BoTNet(Block, [3, 4, 6, 3], in_channels=3, num_classes=num_classes, shape=input_shape, heads=heads)
 
 
 def get_n_params(model):
@@ -215,7 +215,7 @@ def get_n_params(model):
 
 def main():
     x = torch.randn([2, 3, 224, 224])
-    model = ResNet50(resolution=tuple(x.shape[2:]), heads=8)
+    model = BoTNet50(input_shape=tuple(x.shape[2:]), heads=8)
     print(model(x).size())
     print(get_n_params(model))
 
