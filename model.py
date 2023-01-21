@@ -137,7 +137,7 @@ class BoTNet(nn.Module):
         self.layer1 = self._make_layer(block, layers[0], channels=64, stride=1)
         self.layer2 = self._make_layer(block, layers[1], channels=128, stride=2)
         self.layer3 = self._make_layer(block, layers[2], channels=256, stride=2)
-        self.layer4 = self._make_layer(block, layers[3], channels=512, stride=2, mhsa=True, heads=heads)
+        self.layer4 = self._make_layer(block, layers[3], channels=512, stride=1, mhsa=True, heads=heads)
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(512 * 4, num_classes)
@@ -201,24 +201,3 @@ class BoTNet(nn.Module):
 def BoTNet50(num_classes=1000, input_shape=(224, 224), heads=4):
     return BoTNet(Block, [3, 4, 6, 3], in_channels=3, num_classes=num_classes, shape=input_shape, heads=heads)
 
-
-def get_n_params(model):
-    pp = 0
-    for name, p in model.named_parameters():
-        print(name, len(p))
-        nn = 1
-        for s in list(p.size()):
-            nn = nn * s
-        pp += nn
-    return pp
-
-
-def main():
-    x = torch.randn([2, 3, 224, 224])
-    model = BoTNet50(input_shape=tuple(x.shape[2:]), heads=8)
-    print(model(x).size())
-    print(get_n_params(model))
-
-
-if __name__ == '__main__':
-    main()
