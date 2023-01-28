@@ -110,6 +110,7 @@ class Block(nn.Module):
         x = F.relu(x)
         return x
 
+# ResNet implementation based on github.com/aladdinpersson/Machine-Learning-Collection/blob/master/ML/Pytorch/CNN_architectures/pytorch_resnet.py
 
 class BoTNet(nn.Module):
     def __init__(
