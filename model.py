@@ -138,7 +138,7 @@ class BoTNet(nn.Module):
         self.layer1 = self._make_layer(block, layers[0], channels=64, stride=1)
         self.layer2 = self._make_layer(block, layers[1], channels=128, stride=2)
         self.layer3 = self._make_layer(block, layers[2], channels=256, stride=2)
-        self.layer4 = self._make_layer(block, layers[3], channels=512, stride=1, mhsa=True, heads=heads)
+        self.layer4 = self._make_layer(block, layers[3], channels=512, stride=2, mhsa=True, heads=heads)
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(512 * 4, num_classes)
